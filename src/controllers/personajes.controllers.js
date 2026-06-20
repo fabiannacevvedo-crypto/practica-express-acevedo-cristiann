@@ -7,21 +7,16 @@ export const obtenerPersonajes = (req, res) => {
 
 // GET POR ID
 export const obtenerPersonajePorId = (req, res) => {
-
     const id = Number(req.params.id);
 
     if (isNaN(id)) {
-        return res.status(400).json({
-            error: "El ID debe ser numérico"
-        });
+        return res.status(400).json({ error: "El ID debe ser numérico" });
     }
 
     const personaje = personajes.find(p => p.id === id);
 
     if (!personaje) {
-        return res.status(404).json({
-            error: "Personaje no encontrado"
-        });
+        return res.status(404).json({ error: "Personaje no encontrado" });
     }
 
     res.status(200).json(personaje);
@@ -29,13 +24,10 @@ export const obtenerPersonajePorId = (req, res) => {
 
 // POST
 export const crearPersonaje = (req, res) => {
-
     const { nombre, imagen } = req.body;
 
     if (!nombre || !imagen) {
-        return res.status(400).json({
-            error: "Nombre e imagen son obligatorios"
-        });
+        return res.status(400).json({ error: "Nombre e imagen son obligatorios" });
     }
 
     const nuevoPersonaje = {
@@ -51,37 +43,26 @@ export const crearPersonaje = (req, res) => {
 
 // PUT
 export const actualizarPersonaje = (req, res) => {
-
     const id = Number(req.params.id);
 
     if (isNaN(id)) {
-        return res.status(400).json({
-            error: "El ID debe ser numérico"
-        });
+        return res.status(400).json({ error: "El ID debe ser numérico" });
     }
 
     if (Object.keys(req.body).length === 0) {
-        return res.status(400).json({
-            error: "Debe enviar datos para actualizar"
-        });
+        return res.status(400).json({ error: "Debe enviar datos para actualizar" });
     }
 
     const personaje = personajes.find(p => p.id === id);
 
     if (!personaje) {
-        return res.status(404).json({
-            error: "Personaje no encontrado"
-        });
+        return res.status(404).json({ error: "Personaje no encontrado" });
     }
 
     for (const campo in req.body) {
-
         if (req.body[campo] === "") {
-            return res.status(400).json({
-                error: `${campo} no puede estar vacío`
-            });
+            return res.status(400).json({ error: `${campo} no puede estar vacío` });
         }
-
         personaje[campo] = req.body[campo];
     }
 
@@ -90,26 +71,19 @@ export const actualizarPersonaje = (req, res) => {
 
 // DELETE
 export const eliminarPersonaje = (req, res) => {
-
     const id = Number(req.params.id);
 
     if (isNaN(id)) {
-        return res.status(400).json({
-            error: "El ID debe ser numérico"
-        });
+        return res.status(400).json({ error: "El ID debe ser numérico" });
     }
 
     const indice = personajes.findIndex(p => p.id === id);
 
     if (indice === -1) {
-        return res.status(404).json({
-            error: "Personaje no encontrado"
-        });
+        return res.status(404).json({ error: "Personaje no encontrado" });
     }
 
     personajes.splice(indice, 1);
 
-    res.status(200).json({
-        mensaje: "Personaje eliminado correctamente"
-    });
+    res.status(200).json({ mensaje: "Personaje eliminado correctamente" });
 };
